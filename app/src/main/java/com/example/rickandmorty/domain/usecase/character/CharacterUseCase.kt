@@ -22,4 +22,15 @@ class CharacterUseCase @Inject constructor(
             emit(Resource.Error(message = "${e.localizedMessage}"))
         }
     }
+
+    fun searchCharacter(name: String) : Flow<Resource<List<Character>>> = flow {
+        try {
+            emit(Resource.Loading())
+            val characterDtos = characterRepository.getSearchedCharacters(name)
+            val allCharacter = characterDtos.flatMap { it.toCharacter() }
+            emit(Resource.Success(allCharacter))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = "${e.localizedMessage}"))
+        }
+    }
 }

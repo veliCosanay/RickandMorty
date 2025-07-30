@@ -8,6 +8,9 @@ interface CharacterAPI {
 
     @GET("character")
     suspend fun getCharacter(
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("name") name: String?=null
     ) : CharacterDto
+
+
 }
